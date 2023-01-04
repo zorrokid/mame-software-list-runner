@@ -16,12 +16,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+signals:
+    void counterReached();
 private slots:
     void slotButtonClicked(bool checked);
 
 private:
     Ui::MainWindow *ui;
     QPushButton *m_button;
+    int m_counter;
 };
 #endif // MAINWINDOW_H

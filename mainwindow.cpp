@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    m_counter = 0;
     ui->setupUi(this);
     setFixedSize(500, 500);
     m_button = new QPushButton("Test", this);
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_button->setCheckable(true);
 
     connect(m_button, SIGNAL(clicked(bool)), this, SLOT(slotButtonClicked(bool)));
+    connect(this, SIGNAL(counterReached()), QApplication::instance(), SLOT(quit()));
 
     // connect(m_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 
@@ -44,6 +46,10 @@ void MainWindow::slotButtonClicked(bool checked)
         m_button->setText("Checked");
     } else {
         m_button->setText("Hellow world");
+    }
+    m_counter++;
+    if(m_counter == 10) {
+        emit counterReached();
     }
 }
 
