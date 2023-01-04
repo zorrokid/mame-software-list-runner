@@ -4,27 +4,47 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
-
 class QPushButton;
+class QLabel;
+class QMenu;
+class QAction;
+QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow();
     ~MainWindow();
-signals:
-    void counterReached();
+
+
+//signals:
+ //   void counterReached();
+protected:
+#ifndef QT_NO_CONTEXTMENU
+   //void contextMenuEvent(QContextMenuEvent *event) override;
+#endif
+
+
 private slots:
-    void slotButtonClicked(bool checked);
+    //void slotButtonClicked(bool checked);
     void slotShowInfo();
+    void slotOpenSettingsDialog();
 
 private:
-    Ui::MainWindow *ui;
-    QPushButton *m_button;
-    int m_counter;
+    /*QPushButton *m_button;
+    int m_counter;*/
+    QMenu *fileMenu;
+    QMenu *aboutMenu;
+    QAction *openSettingsDialogAction;
+    QAction *aboutQtAction;
+    QAction *quitAction;
+    QLabel *infoLabel;
+
+    void createActions();
+    void createMenus();
+
+
 };
 #endif // MAINWINDOW_H

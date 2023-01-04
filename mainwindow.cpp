@@ -1,16 +1,48 @@
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
 #include <QPushButton>
 #include <QProgressBar>
 #include <QApplication>
 #include <QSlider>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QMenu>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow()
 {
-    m_counter = 0;
-    ui->setupUi(this);
+    QWidget *widget = new QWidget(this);
+    setCentralWidget(widget);
+
+    QWidget *topFiller = new QWidget();
+    topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    infoLabel = new QLabel(tr("<i>Choose a menu option or right click to invoke context menu</i>"));
+    infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    infoLabel->setAlignment(Qt::AlignCenter);
+
+    QWidget *bottomFiller = new QWidget();
+    bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->setContentsMargins(5, 5, 5, 5);
+    layout->addWidget(topFiller);
+    layout->addWidget(infoLabel);
+    layout->addWidget(bottomFiller);
+    // layout should be always set to central widget (instead of main window)
+    widget->setLayout(layout);
+
+    createActions();
+    createMenus();
+
+    QString message = tr("A context menu is available by right-clicking");
+    statusBar()->showMessage(message);
+
+    setWindowTitle("Mame Software List Runner");
+    setMinimumSize(160, 160);
+    resize(480,320);
+
+    /*m_counter = 0;
     setFixedSize(500, 500);
     m_button = new QPushButton("Test", this);
     m_button->setGeometry(10, 10, 80, 30);
@@ -42,14 +74,39 @@ MainWindow::MainWindow(QWidget *parent)
     buttonQuit->setGeometry(10, 120, 80, 30);
 
     connect(buttonQuit, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
+    */
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
 
-void MainWindow::slotButtonClicked(bool checked)
+void MainWindow::createActions()
+{
+    aboutQtAction = new QAction(tr("About Qt"), this);
+    connect(aboutQtAction, &QAction::triggered, this, &MainWindow::slotShowInfo);
+
+    quitAction = new QAction(tr("Quit"), this);
+    connect(quitAction, &QAction::triggered, QApplication::instance(), &QApplication::quit);
+
+    openSettingsDialogAction = new QAction(tr("Open settings dialog"));
+    connect(openSettingsDialogAction, &QAction::triggered, this, &MainWindow::slotOpenSettingsDialog);
+
+}
+
+void MainWindow::createMenus()
+{
+    fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(openSettingsDialogAction);
+    fileMenu->addAction(quitAction);
+
+    aboutMenu = menuBar()->addMenu(tr("&Info"));
+    aboutMenu->addAction(aboutQtAction);
+
+
+}
+
+/*void MainWindow::slotButtonClicked(bool checked)
 {
     if (checked) {
         m_button->setText("Checked");
@@ -60,10 +117,15 @@ void MainWindow::slotButtonClicked(bool checked)
     if(m_counter == 10) {
         emit counterReached();
     }
-}
+}*/
 
 void MainWindow::slotShowInfo()
 {
     QApplication::aboutQt();
+}
+
+void MainWindow::slotOpenSettingsDialog()
+{
+
 }
 
