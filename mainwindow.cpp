@@ -8,6 +8,7 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QMenu>
+#include "settingsdialog.h"
 
 MainWindow::MainWindow()
 {
@@ -126,6 +127,7 @@ void MainWindow::slotShowInfo()
 
 void MainWindow::slotOpenSettingsDialog()
 {
-
+    SettingsDialog *dialog = new SettingsDialog(this);
+    dialog->show();
 }
 
