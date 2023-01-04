@@ -20,6 +20,7 @@ signals:
     void counterReached();
 private slots:
     void slotButtonClicked(bool checked);
+    void slotShowInfo();
 
 private:
     Ui::MainWindow *ui;

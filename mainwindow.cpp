@@ -33,6 +33,15 @@ MainWindow::MainWindow(QWidget *parent)
     slider->setGeometry(10, 80, 180, 30);
 
     QObject::connect(slider, SIGNAL(valueChanged(int)), progressBar, SLOT(setValue(int)));
+
+    QPushButton *buttonInfo = new QPushButton("Info", this);
+    buttonInfo->setGeometry(50, 100, 80, 30);
+    connect(buttonInfo, SIGNAL(clicked()), this, SLOT(slotShowInfo()));
+
+    QPushButton *buttonQuit = new QPushButton("Quit", this);
+    buttonQuit->setGeometry(10, 120, 80, 30);
+
+    connect(buttonQuit, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 }
 
 MainWindow::~MainWindow()
@@ -51,5 +60,10 @@ void MainWindow::slotButtonClicked(bool checked)
     if(m_counter == 10) {
         emit counterReached();
     }
+}
+
+void MainWindow::slotShowInfo()
+{
+    QApplication::aboutQt();
 }
 
