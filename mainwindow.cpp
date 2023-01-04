@@ -13,8 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(500, 500);
     m_button = new QPushButton("Test", this);
     m_button->setGeometry(10, 10, 80, 30);
+    m_button->setCheckable(true);
 
-    connect(m_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
+    connect(m_button, SIGNAL(clicked(bool)), this, SLOT(slotButtonClicked(bool)));
+
+    // connect(m_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 
     QProgressBar *progressBar = new QProgressBar(this);
     progressBar->setRange(0, 100);
@@ -33,5 +36,14 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::slotButtonClicked(bool checked)
+{
+    if (checked) {
+        m_button->setText("Checked");
+    } else {
+        m_button->setText("Hellow world");
+    }
 }
 

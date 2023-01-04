@@ -17,6 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void slotButtonClicked(bool checked);
+
 private:
     Ui::MainWindow *ui;
     QPushButton *m_button;
