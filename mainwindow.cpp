@@ -35,6 +35,7 @@ MainWindow::MainWindow()
 
     createActions();
     createMenus();
+    initializeSettings();
 
     QString message = tr("A context menu is available by right-clicking");
     statusBar()->showMessage(message);
@@ -128,3 +129,8 @@ void MainWindow::slotOpenSettingsDialog()
     dialog->show();
 }
 
+void MainWindow::initializeSettings()
+{
+    QCoreApplication::setOrganizationName("Zorrokid");
+    QCoreApplication::setApplicationName("Mame Software List Runner");
+}

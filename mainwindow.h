@@ -44,6 +44,7 @@ private:
 
     void createActions();
     void createMenus();
+    void initializeSettings();
 
 
 };
