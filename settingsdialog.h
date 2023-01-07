@@ -5,11 +5,15 @@
 #include <QWidget>
 #include <QDialog>
 
+class QLineEdit;
+
 class SettingsDialog : public QDialog
 {
     Q_OBJECT
 public:
     SettingsDialog(QWidget *parent = nullptr);
+private:
+    QLineEdit *mameHashPathEdit;
 private slots:
     void slotOpenFileSelector();
 };

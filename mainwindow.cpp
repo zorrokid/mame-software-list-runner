@@ -92,7 +92,6 @@ void MainWindow::createActions()
 
     openSettingsDialogAction = new QAction(tr("Open settings dialog"));
     connect(openSettingsDialogAction, &QAction::triggered, this, &MainWindow::slotOpenSettingsDialog);
-
 }
 
 void MainWindow::createMenus()
@@ -103,8 +102,6 @@ void MainWindow::createMenus()
 
     aboutMenu = menuBar()->addMenu(tr("&Info"));
     aboutMenu->addAction(aboutQtAction);
-
-
 }
 
 /*void MainWindow::slotButtonClicked(bool checked)
