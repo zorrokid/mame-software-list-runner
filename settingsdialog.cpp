@@ -1,14 +1,21 @@
 #include "settingsdialog.h"
 #include <QPushButton>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QHBoxLayout>
 
 SettingsDialog::SettingsDialog(QWidget *parent)
     : QDialog(parent)
 {
-    QPushButton *buttonInfo = new QPushButton("Info", this);
-    buttonInfo->setGeometry(10, 10, 80, 30);
-
+    QFormLayout *formLayout = new QFormLayout();
+    QLineEdit *lineEdit = new QLineEdit();
+    QPushButton *buttonInfo = new QPushButton("Browse", this);
+    QHBoxLayout *mamePathLayout = new QHBoxLayout();
+    mamePathLayout->addWidget(lineEdit);
+    mamePathLayout->addWidget(buttonInfo);
+    formLayout->addRow(tr("Path to MAME hash files folder"), mamePathLayout);
+    setLayout(formLayout);
     setWindowTitle(tr("Settings"));
     setMinimumSize(160, 160);
     resize(480,320);
-
 }
