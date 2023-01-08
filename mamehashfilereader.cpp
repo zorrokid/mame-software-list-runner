@@ -2,6 +2,7 @@
 #include <QDir>
 #include <QXmlStreamReader>
 #include <QMessageBox>
+#include <QDomDocument>
 #include "mamehashfilereader.h"
 
 MameHashFileReader::MameHashFileReader(QString hashFilePath, QObject *parent)
@@ -18,19 +19,38 @@ void MameHashFileReader::read()
     for(const auto& fileName : fileNames){
         qInfo() << "Read file " << fileName;
         QString filePath = directory.filePath(fileName);
-        QFile file(filePath);
-        if (!file.open(QFile::ReadOnly | QFile::Text)) {
-            QMessageBox messageBox;
+        QFile *file = new QFile(filePath);
+        if (!file->open(QFile::ReadOnly | QFile::Text)) {
             QString messageText = tr("Cannot read file %1:\n%2")
-                    .arg(QDir::toNativeSeparators(filePath), file.errorString());
-
-            messageBox.setText(messageText);
-            messageBox.exec();
-            return;
+                    .arg(QDir::toNativeSeparators(filePath), file->errorString());
+            showMessage(messageText);
+           return;
         }
+        QString errorStr;
+        int errorLine;
+        int errorColumn;
+        QDomDocument domDocument;
+        if (!domDocument.setContent(file, true, &errorStr, &errorLine, &errorColumn)) {
+            QString message = tr("Parse error at line %1, column %2:\n%3")
+                    .arg(errorLine)
+                    .arg(errorColumn)
+                    .arg(errorStr);
+            showMessage(message);
+        }
+        QDomElement root = domDocument.documentElement();
+        qInfo() << "Got root element " << root.tagName();
+        file->close();
+        delete file;
 
 
         //QXmlStreamReader xml;
         //xml.setDevice();
     }
+}
+
+void MameHashFileReader::showMessage(QString messageText)
+{
+    QMessageBox messageBox;
+    messageBox.setText(messageText);
+    messageBox.exec();
 }

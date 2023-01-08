@@ -15,6 +15,7 @@ signals:
 
 private:
     QString hashFilePath;
+    void showMessage(QString message);
 };
 
 #endif // MAMEHASHFILEREADER_H
