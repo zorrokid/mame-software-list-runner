@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include "settingsdialog.h"
 #include "settingnames.h"
+#include "mamehashfilereader.h"
 
 MainWindow::MainWindow()
 {
@@ -96,6 +97,9 @@ void MainWindow::slotScanHashFiles()
         messageBox.exec();
         return;
     }
+
+    MameHashFileReader reader = MameHashFileReader(mameHashFilePath, this);
+    reader.read();
 }
 
 void MainWindow::initializeSettings()

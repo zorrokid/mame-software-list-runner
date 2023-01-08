@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         settingsdialog.cpp
         settingnames.h
         settingnames.cpp
+        mamehashfilereader.h
+        mamehashfilereader.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
