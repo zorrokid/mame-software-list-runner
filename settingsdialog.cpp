@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QFileDialog>
 #include <QSettings>
+#include "settingnames.h"
 
 SettingsDialog::SettingsDialog(QWidget *parent)
     : QDialog(parent)
@@ -12,7 +13,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     QFormLayout *formLayout = new QFormLayout();
     mameHashPathEdit = new QLineEdit();
     QSettings settings;
-    QString mameHashFilePath = settings.value("mamePaths/hashFilesPath").toString();
+    QString mameHashFilePath = settings.value(SettingNames::MameHashFilePath).toString();
     mameHashPathEdit->setText(mameHashFilePath);
 
     QPushButton *buttonInfo = new QPushButton("Browse", this);
@@ -33,5 +34,5 @@ void SettingsDialog::slotOpenFileSelector()
                 QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     mameHashPathEdit->setText(dir);
     QSettings settings;
-    settings.setValue("mamePaths/hashFilesPath", dir);
+    settings.setValue(SettingNames::MameHashFilePath, dir);
 }
