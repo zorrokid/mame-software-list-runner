@@ -8,7 +8,10 @@
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QMenu>
+#include <QSettings>
+#include <QMessageBox>
 #include "settingsdialog.h"
+#include "settingnames.h"
 
 MainWindow::MainWindow()
 {
@@ -56,11 +59,15 @@ void MainWindow::createActions()
 
     openSettingsDialogAction = new QAction(tr("Open settings dialog"));
     connect(openSettingsDialogAction, &QAction::triggered, this, &MainWindow::slotOpenSettingsDialog);
+
+    scanHashFilesAction = new QAction(tr("Scan MAME hash files"));
+    connect(scanHashFilesAction, &QAction::triggered, this, &MainWindow::slotScanHashFiles);
 }
 
 void MainWindow::createMenus()
 {
     fileMenu = menuBar()->addMenu(tr("&File"));
+    fileMenu->addAction(scanHashFilesAction);
     fileMenu->addAction(openSettingsDialogAction);
     fileMenu->addAction(quitAction);
 
@@ -77,6 +84,18 @@ void MainWindow::slotOpenSettingsDialog()
 {
     SettingsDialog *dialog = new SettingsDialog(this);
     dialog->show();
+}
+
+void MainWindow::slotScanHashFiles()
+{
+    QSettings settings;
+    QString mameHashFilePath = settings.value(SettingNames::MameHashFilePath).toString();
+    if (mameHashFilePath.isNull() || mameHashFilePath.isEmpty()){
+        QMessageBox messageBox;
+        messageBox.setText(tr("Set mame hash file path to settings using settings dialog first."));
+        messageBox.exec();
+        return;
+    }
 }
 
 void MainWindow::initializeSettings()

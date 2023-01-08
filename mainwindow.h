@@ -21,6 +21,7 @@ public:
 private slots:
     void slotShowInfo();
     void slotOpenSettingsDialog();
+    void slotScanHashFiles();
 
 private:
     QMenu *fileMenu;

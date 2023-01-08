@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         settingsdialog.h
         settingsdialog.cpp
+        settingnames.h
+        settingnames.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
