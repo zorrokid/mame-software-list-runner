@@ -18,28 +18,17 @@ public:
     MainWindow();
     ~MainWindow();
 
-
-//signals:
- //   void counterReached();
-protected:
-#ifndef QT_NO_CONTEXTMENU
-   //void contextMenuEvent(QContextMenuEvent *event) override;
-#endif
-
-
 private slots:
-    //void slotButtonClicked(bool checked);
     void slotShowInfo();
     void slotOpenSettingsDialog();
 
 private:
-    /*QPushButton *m_button;
-    int m_counter;*/
     QMenu *fileMenu;
     QMenu *aboutMenu;
     QAction *openSettingsDialogAction;
     QAction *aboutQtAction;
     QAction *quitAction;
+    QAction *scanHashFilesAction;
     QLabel *infoLabel;
 
     void createActions();
