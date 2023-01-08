@@ -30,7 +30,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 void SettingsDialog::slotOpenFileSelector()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open directory with MAME hash files"),
-                "/home", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+                QDir::homePath(), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     mameHashPathEdit->setText(dir);
     QSettings settings;
     settings.setValue("mamePaths/hashFilesPath", dir);
