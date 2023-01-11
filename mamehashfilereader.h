@@ -3,6 +3,10 @@
 
 #include <QObject>
 
+class QDir;
+class QDomDocument;
+class QDomElement;
+
 class MameHashFileReader : public QObject
 {
     Q_OBJECT
@@ -16,6 +20,9 @@ signals:
 private:
     QString hashFilePath;
     void showMessage(QString message);
+    void readFile(const QString &fileName, const QDir &directory);
+    void processDocument(const QDomDocument &document);
+    void processSoftwareElement(const QDomElement &software);
 };
 
 #endif // MAMEHASHFILEREADER_H
