@@ -16,6 +16,17 @@
 
 MainWindow::MainWindow()
 {
+    QString path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    qDebug() << "Document path is " << path << ".";
+    if (path.isEmpty()){
+        // TODO
+    }
+
+    // Start initialing databse in a separate thread
+    dbInitController = new DbInitController(this);
+    emit dbInitController->operate(path);
+
+    // Set up the UI
     QWidget *widget = new QWidget(this);
     setCentralWidget(widget);
 

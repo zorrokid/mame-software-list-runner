@@ -2,6 +2,7 @@
 #define MAMEHASHFILEREADER_H
 
 #include <QObject>
+#include "databaseprovider.h"
 
 class QDir;
 class QDomDocument;
@@ -19,6 +20,7 @@ signals:
 
 private:
     QString hashFilePath;
+    DatabaseProvider* databaseProvider;
     void showMessage(QString message);
     void readFile(const QString &fileName, const QDir &directory);
     void processDocument(const QDomDocument &document);

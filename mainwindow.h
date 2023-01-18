@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "dbinitcontroller.h"
 
 QT_BEGIN_NAMESPACE
 class QPushButton;
@@ -31,6 +32,7 @@ private:
     QAction *quitAction;
     QAction *scanHashFilesAction;
     QLabel *infoLabel;
+    DbInitController *dbInitController;
 
     void createActions();
     void createMenus();
