@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Xml)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Xml)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Xml Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Xml Sql)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -23,6 +23,12 @@ set(PROJECT_SOURCES
         settingnames.cpp
         mamehashfilereader.h
         mamehashfilereader.cpp
+        databaseprovider.h
+        databaseprovider.cpp
+        dbinitworker.h
+        dbinitworker.cpp
+        dbinitcontroller.h
+        dbinitcontroller.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -51,6 +57,7 @@ endif()
 target_link_libraries(MameSoftwareListRunner PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt::Xml
+    Qt::Sql
 )
 
 set_target_properties(MameSoftwareListRunner PROPERTIES
