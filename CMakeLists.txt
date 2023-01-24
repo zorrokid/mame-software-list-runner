@@ -29,6 +29,7 @@ set(PROJECT_SOURCES
         dbinitworker.cpp
         dbinitcontroller.h
         dbinitcontroller.cpp
+        dbmigrations.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

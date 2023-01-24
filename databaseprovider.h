@@ -4,14 +4,6 @@
 #include <QObject>
 #include <QtSql>
 
-const auto SOFTWARE_LISTS_SQL = QLatin1String(R"(
-    CREATE TABLE softwareLists(
-        id INTEGER PRIMARY KEY,
-        name VARCHAR,
-        description VARCHAR
-    )
-)");
-
 const auto INSERT_SOFTWARE_LISTS_SQL = QLatin1String(R"(
     INSERT INTO softwareLists(name, description)
     VALUES (?, ?)
