@@ -37,6 +37,7 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
 
     if (migrationCount == version){
         qDebug() << "Database up to date.";
+        db.close();
         return  QSqlError("", "", QSqlError::NoError);
     }
 
@@ -47,6 +48,7 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
                  << *MIGRATION_LIST[i];
         if(!q.exec(*MIGRATION_LIST[i])) {
             qWarning() << "Failed running migration " << *MIGRATION_LIST[i];
+            db.close();
             return QSqlError("", "Failed running migration.", QSqlError::UnknownError);
         }
     }
@@ -54,6 +56,7 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
     QString setPragmaUserVersion = QString("PRAGMA user_version=%1").arg(migrationCount);
     if (!q.exec(setPragmaUserVersion)){
        qWarning() << "Failed setting db schema version.";
+       db.close();
        return QSqlError("", "Failed setting db schema version.", QSqlError::UnknownError);
     }
     q.exec("PRAGMA user_version");
@@ -62,6 +65,7 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
         qDebug() << "Database current user_version is: " << version;
     }
 
+    db.close();
     return QSqlError("", "", QSqlError::NoError);
 }
 
