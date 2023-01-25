@@ -4,6 +4,13 @@
 #include <QLatin1String>
 #include <QVector>
 
+/*const auto MIGRATION_0_MIGRATION_HISTORY = QLatin1String(R"(
+    CREATE TABLE migration_history(
+        id INTEGER PRIMARY KEY
+        schema_version INTEGER
+    )
+)");*/
+
 const auto MIGRATION_1_SOFTWARE_LISTS_SQL = QLatin1String(R"(
     CREATE TABLE software_list(
         id INTEGER PRIMARY KEY,
@@ -21,7 +28,7 @@ const auto MIGRATION_2_SOFTWARE_SQL = QLatin1String(R"(
         supported INTEGER,
         description VARCHAR,
         year INTEGER,
-        publisher VARCHAR,
+        publisher VARCHAR
     )
 )");
 
@@ -91,7 +98,7 @@ const auto MIGRATION_9_SOFTWARE_PART_DISK_AREA_SQL = QLatin1String(R"(
     CREATE TABLE software_part_disk_area(
         id INTEGER PRIMARY KEY,
         software_part_id INTEGER,
-        name VARCHAR,
+        name VARCHAR
     )
 )");
 
@@ -110,7 +117,7 @@ const auto MIGRATION_11_SOFTWARE_PART_DIPSWITCH_SQL = QLatin1String(R"(
     CREATE TABLE software_part_dipswitch(
         id INTEGER PRIMARY KEY,
         software_part_id INTEGER,
-        name VARCHAR,
+        name VARCHAR
     )
 )");
 const auto MIGRATION_12_SOFTWARE_PART_DIPSWITCH_DIPVALUE_SQL = QLatin1String(R"(
@@ -119,11 +126,12 @@ const auto MIGRATION_12_SOFTWARE_PART_DIPSWITCH_DIPVALUE_SQL = QLatin1String(R"(
         software_part_dipswitch_id INTEGER,
         name VARCHAR,
         value VARCHAR,
-        default INTEGER,
+        default_value INTEGER
     )
 )");
 
 static const QLatin1String* MIGRATION_LIST[] = {
+    //&MIGRATION_0_MIGRATION_HISTORY,
     &MIGRATION_1_SOFTWARE_LISTS_SQL,
     &MIGRATION_2_SOFTWARE_SQL,
     &MIGRATION_3_SOFTWARE_INFO_SQL,

@@ -22,7 +22,7 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
     if (!db.open())
         return db.lastError();
 
-    // version 0 means no migrations have been run
+    // version 0 means no migrations has been run
     int version = 0;
 
     QSqlQuery q;
@@ -35,24 +35,34 @@ QSqlError DatabaseProvider::initDb(const QString &filePath)
     int index = 0;
     int migrationCount = sizeof(MIGRATION_LIST) / sizeof(QLatin1String*);
 
+    if (migrationCount == version){
+        qDebug() << "Database up to date.";
+        return  QSqlError("", "", QSqlError::NoError);
+    }
+
     // [0] = first migration => version = i+1
     for(int i = version; i < migrationCount; i++){
         qDebug() << "Running migration: "
+                 << i << " "
                  << *MIGRATION_LIST[i];
-        q.exec(*MIGRATION_LIST[i]);
+        if(!q.exec(*MIGRATION_LIST[i])) {
+            qWarning() << "Failed running migration " << *MIGRATION_LIST[i];
+            return QSqlError("", "Failed running migration.", QSqlError::UnknownError);
+        }
     }
-    q.prepare("PRAGMA user_version = ?");
-    q.bindValue(0, migrationCount);
-    q.exec();
+    qDebug() << "Setting schema version " << migrationCount;
+    QString setPragmaUserVersion = QString("PRAGMA user_version=%1").arg(migrationCount);
+    if (!q.exec(setPragmaUserVersion)){
+       qWarning() << "Failed setting db schema version.";
+       return QSqlError("", "Failed setting db schema version.", QSqlError::UnknownError);
+    }
+    q.exec("PRAGMA user_version");
+    if (q.first()){
+        version = q.value(0).toInt();
+        qDebug() << "Database current user_version is: " << version;
+    }
 
-    QStringList tables = db.tables();
-    if (tables.contains("softwareList", Qt::CaseInsensitive))
-        return QSqlError();
-
-    //if (!q.exec(SOFTWARE_LISTS_SQL))
-     //   return q.lastError();
-
-    return QSqlError();
+    return QSqlError("", "", QSqlError::NoError);
 }
 
  QVariant DatabaseProvider::addSoftwareList(QSqlQuery &q, QString &name, QString &description)
